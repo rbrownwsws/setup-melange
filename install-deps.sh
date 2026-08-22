@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-packages=("bubblewrap")
+packages=()
 
-if [[ "$INSTALL_QEMU" == "true" ]]; then
+if [[ "${INSTALL_BUBBLEWRAP}" == "true" ]]; then
+  packages+=("bubblewrap")
+fi
+
+
+if [[ "${INSTALL_QEMU}" == "true" ]]; then
   packages+=("qemu-user-static")
 fi
 
-sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${packages[@]}"
+if [[ "${#packages[@]}" -gt 0 ]]; then
+  sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${packages[@]}"
+else
+  echo "No dependencies to install"
+fi

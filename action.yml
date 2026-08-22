@@ -8,6 +8,10 @@ inputs:
     description: "Version of melange to install"
     required: false
     default: "v0.59.1"
+  install-bubblewrap:
+    description: "Install bubblewrap (for use as a runner)"
+    required: false
+    default: "true"
   install-qemu:
     description: "Install qemu (for building non-native arches)"
     required: false
@@ -32,6 +36,7 @@ runs:
     - name: Install dependencies
       shell: bash
       env:
+        INSTALL_BUBBLEWRAP: ${{ inputs.install-bubblewrap }}
         INSTALL_QEMU: ${{ inputs.install-qemu }}
       run: |
         set -euo pipefail
