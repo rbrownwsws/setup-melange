@@ -1,0 +1,84 @@
+# $schema: https://json.schemastore.org/github-action.json
+
+name: Setup melange
+description: Sets up melange
+
+inputs:
+  melange-version:
+    description: "Version of melange to install"
+    required: false
+    default: "v0.59.1"
+  install-qemu:
+    description: "Install qemu (for building non-native arches)"
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+
+  steps:
+    - name: Prepare
+      id: prepare
+      shell: bash
+      env:
+        INSTALL_MELANGE_VERSION: ${{ inputs.melange-version }}
+      run: |
+        set -euo pipefail
+
+        SCRIPT="${GITHUB_ACTION_PATH}/prepare.sh"
+        chmod +x "${SCRIPT}"
+        "$SCRIPT"
+
+    - name: Install dependencies
+      shell: bash
+      env:
+        INSTALL_QEMU: ${{ inputs.install-qemu }}
+      run: |
+        set -euo pipefail
+
+        SCRIPT="${GITHUB_ACTION_PATH}/install-deps.sh"
+        chmod +x "${SCRIPT}"
+        "$SCRIPT"
+
+    - name: Install Cosign
+      if: skip-install == 'false'
+      uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+
+    - name: Install melange
+      if: skip-install == 'false'
+      env:
+        MELANGE_TAG: ${{ steps.prepare.outputs.melange-tag }}
+        MELANGE_VERSION: ${{ steps.prepare.outputs.melange-version }}
+        MELANGE_ARCH: ${{ steps.prepare.outputs.melange-arch }}
+        TOOL_DIR: ${{ steps.prepare.outputs.tool-dir }}
+        TOOL_SENTINEL: ${{ steps.prepare.outputs.tool-sentinel }}
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        SCRIPT="${GITHUB_ACTION_PATH}/install-melange.sh"
+        chmod +x "${SCRIPT}"
+        "$SCRIPT"
+
+    - name: Add melange to PATH
+      shell: bash
+      env:
+        TOOL_DIR: ${{ steps.prepare.outputs.tool-dir }}
+      run: | # zizmor: ignore[github-env]
+        set -euo pipefail
+
+        # This should hopefully be safe
+        # We try to validate things in `prepare.sh` so it cannot be abused
+        echo "${TOOL_DIR}" >> "${GITHUB_PATH}"
+
+    - name: Check installation
+      shell: bash
+      env:
+        MELANGE_TAG: ${{ steps.prepare.outputs.melange-tag }}
+        TOOL_DIR: ${{ steps.prepare.outputs.tool-dir }}
+      run: |
+        set -euo pipefail
+
+        SCRIPT="${GITHUB_ACTION_PATH}/check-melange-install.sh"
+        chmod +x "${SCRIPT}"
+        "$SCRIPT"
