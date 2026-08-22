@@ -1,0 +1,11 @@
+# vim:syntax=apparmor
+# This profile doesn't confine melange in any way.
+# It just disables Ubuntu's default restriction on userns.
+
+abi <abi/4.0>,
+include <tunables/global>
+
+profile local-melange ${TOOL_DIR}/melange flags=(unconfined) {
+ userns,
+}
+
