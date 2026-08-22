@@ -78,7 +78,7 @@ runs:
         set -euo pipefail
 
         apparmor_profile=$(envsubst '${TOOL_DIR}' < "${GITHUB_ACTION_PATH}/apparmor-template")
-        sudo appparmor_parser -r <<<"${apparmor_profile}"
+        sudo apparmor_parser -r <<<"${apparmor_profile}"
 
     - name: Add melange to PATH
       shell: bash
