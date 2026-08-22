@@ -4,11 +4,15 @@ name: Check - GitHub Actions Security Analysis with zizmor 🌈
 
 on:
   push:
-    branches: ["master"]
+    branches: [ "master" ]
   pull_request:
-    branches: ["**"]
+    branches: [ "**" ]
 
-permissions: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions: { }
 
 jobs:
   zizmor:
