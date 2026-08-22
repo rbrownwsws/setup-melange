@@ -16,6 +16,10 @@ inputs:
     description: "Install qemu (for building non-native arches)"
     required: false
     default: "true"
+  github-api-token:
+    description: "GitHub API token for accessing GitHub resources"
+    required: false
+    default: ${{ github.token }}
 
 runs:
   using: composite
@@ -57,6 +61,7 @@ runs:
         MELANGE_ARCH: ${{ steps.prepare.outputs.melange-arch }}
         TOOL_DIR: ${{ steps.prepare.outputs.tool-dir }}
         TOOL_SENTINEL: ${{ steps.prepare.outputs.tool-sentinel }}
+        GH_TOKEN: ${{ inputs.github-api-token }}
       shell: bash
       run: |
         set -euo pipefail
