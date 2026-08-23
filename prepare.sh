@@ -23,13 +23,19 @@ esac
 
 # WARNING: It is important that we are careful with this.
 #          Malicious "versions" with newlines etc. may be used to manipulate PATH in dangerous ways.
-if [[ ! "${INSTALL_MELANGE_VERSION}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+if [[ ! "${INSTALL_MELANGE_VERSION:-}" =~ ^(v?[0-9]+\.[0-9]+\.[0-9]+)?$ ]]; then
   echo "::error::Invalid melange-version: ${INSTALL_MELANGE_VERSION}"
   exit 1
 fi
 
-# Normalise version/tag
-MELANGE_VERSION="${INSTALL_MELANGE_VERSION#v}"
+if [[ -n "${INSTALL_MELANGE_VERSION:-}" ]]; then
+  # Normalise version
+  MELANGE_VERSION="${INSTALL_MELANGE_VERSION#v}"
+else
+  # Use default melange version for this version of the action
+  MELANGE_VERSION=$(cat "${GITHUB_ACTION_PATH}/melange-version")
+fi
+
 MELANGE_TAG="v${MELANGE_VERSION}"
 
 TOOL_HOME="${RUNNER_TOOL_CACHE}/melange"
