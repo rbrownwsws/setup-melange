@@ -2,5 +2,24 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices"
+  ],
+  "packageRules": [
+    {
+      "matchFileNames": [
+        ".github/workflows/**"
+      ],
+      "extends": [
+        ":semanticCommitTypeAll(ci)"
+      ]
+    },
+    {
+      "matchFileNames": [
+        "action.yml",
+        "action.yaml"
+      ],
+      "extends": [
+        ":semanticCommitTypeAll(fix)"
+      ]
+    }
   ]
 }
