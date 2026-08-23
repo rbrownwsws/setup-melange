@@ -7,7 +7,7 @@ inputs:
   melange-version:
     description: "Version of melange to install"
     required: false
-    default: "v0.59.1"
+    default: ""
   install-bubblewrap:
     description: "Install bubblewrap (for use as a runner)"
     required: false

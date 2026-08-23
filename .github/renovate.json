@@ -3,6 +3,16 @@
   "extends": [
     "config:best-practices"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^melange-version$/"],
+      "matchStrings": ["(?<currentValue>.*)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "chainguard-dev/melange",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
+  ],
   "packageRules": [
     {
       "matchFileNames": [
@@ -15,6 +25,34 @@
         "action.yml",
         "action.yaml"
       ],
+      "semanticCommitType": "fix"
+    },
+    {
+      "description": "melange post-1.0: major bump is breaking",
+      "matchFileNames": ["melange-version"],
+      "matchUpdateTypes": ["major"],
+      "semanticCommitType": "feat",
+      "commitBody": "BREAKING CHANGE: melange {{newVersion}} is a major release and may break build scripts."
+    },
+    {
+      "description": "melange pre-1.0: minor bump is treated as breaking (can be manually overridden in merge)",
+      "matchFileNames": ["melange-version"],
+      "matchCurrentVersion": "/^0\\./",
+      "matchUpdateTypes": ["minor"],
+      "semanticCommitType": "feat",
+      "commitBody": "BREAKING CHANGE: melange {{newVersion}} is a pre-1.0 minor release and may break build scripts."
+    },
+    {
+      "description": "melange post-1.0: minor bump is a normal feat",
+      "matchFileNames": ["melange-version"],
+      "matchCurrentVersion": "!/^0\\./",
+      "matchUpdateTypes": ["minor"],
+      "semanticCommitType": "feat"
+    },
+    {
+      "description": "melange patch bump",
+      "matchFileNames": ["melange-version"],
+      "matchUpdateTypes": ["patch"],
       "semanticCommitType": "fix"
     }
   ]
