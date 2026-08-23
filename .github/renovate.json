@@ -7,7 +7,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": ["/^melange-version$/"],
-      "matchStrings": ["(?<currentValue>.*)"],
+      "matchStrings": ["^(?<currentValue>.*)$"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "chainguard-dev/melange",
       "extractVersionTemplate": "^v(?<version>.*)$"
