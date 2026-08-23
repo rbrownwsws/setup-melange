@@ -8,18 +8,14 @@
       "matchFileNames": [
         ".github/workflows/**"
       ],
-      "extends": [
-        ":semanticCommitTypeAll(ci)"
-      ]
+      "semanticCommitType": "ci"
     },
     {
       "matchFileNames": [
         "action.yml",
         "action.yaml"
       ],
-      "extends": [
-        ":semanticCommitTypeAll(fix)"
-      ]
+      "semanticCommitType": "fix"
     }
   ]
 }
