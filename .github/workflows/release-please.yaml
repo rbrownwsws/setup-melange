@@ -1,37 +1,19 @@
 # $schema: https://json.schemastore.org/github-workflow.json
 
+name: Run release-please
+
 on:
   push:
     branches:
       - master
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions: {}
-
-name: release-please
 
 jobs:
   release-please:
-    name: Run release-please
-
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Create GitHub App Installation Token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
-        id: app-token
-        with:
-          client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
-          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
-          permission-contents: write
-          permission-issues: write
-          permission-pull-requests: write
-
-      - name: Run release-please
-        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
-        with:
-          release-type: simple
-          token: ${{ steps.app-token.outputs.token }}
+    name: release-please
+    uses: rbrownwsws/actions-workflows/.github/workflows/release-please.yaml@99d2f29fa2082208aef7b0036ec099262cf0164e # v1.0.0
+    with:
+      app-client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
+    secrets:
+      app-private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}

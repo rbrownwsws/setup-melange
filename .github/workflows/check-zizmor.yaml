@@ -8,28 +8,11 @@ on:
   pull_request:
     branches: [ "**" ]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
-permissions: { }
+permissions: {}
 
 jobs:
   zizmor:
     name: Run zizmor
-
-    runs-on: ubuntu-24.04
-
+    uses: rbrownwsws/actions-workflows/.github/workflows/check-zizmor.yaml@99d2f29fa2082208aef7b0036ec099262cf0164e # v1.0.0
     permissions:
       security-events: write  # to upload results to GitHub Advanced Security
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Run zizmor 🌈
-        uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
-        with:
-          persona: 'pedantic'
