@@ -3,6 +3,7 @@
   "extends": [
     "config:best-practices"
   ],
+  "semanticCommits": "enabled",
   "customManagers": [
     {
       "customType": "regex",
