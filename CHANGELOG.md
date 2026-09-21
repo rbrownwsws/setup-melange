@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/rbrownwsws/setup-melange/compare/v1.2.0...v1.2.1) (2026-09-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency chainguard-dev/melange to v0.61.1 ([#22](https://github.com/rbrownwsws/setup-melange/issues/22)) ([3160655](https://github.com/rbrownwsws/setup-melange/commit/31606558e38b40544a780f62746c35da0edfaa88))
+
 ## [1.2.0](https://github.com/rbrownwsws/setup-melange/compare/v1.1.0...v1.2.0) (2026-09-18)
 
 
