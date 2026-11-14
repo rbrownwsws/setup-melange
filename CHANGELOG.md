@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.1](https://github.com/rbrownwsws/setup-melange/compare/v1.5.0...v1.5.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency chainguard-dev/melange to v0.64.1 ([#38](https://github.com/rbrownwsws/setup-melange/issues/38)) ([8a281ee](https://github.com/rbrownwsws/setup-melange/commit/8a281eec18ae849d31f49df1a7391ac2ee9c8fce))
+* **deps:** update sigstore/cosign-installer action to v4.1.3 ([#36](https://github.com/rbrownwsws/setup-melange/issues/36)) ([6531188](https://github.com/rbrownwsws/setup-melange/commit/6531188e8add90419ac94571bb73eeb236a6343d))
+
 ## [1.5.0](https://github.com/rbrownwsws/setup-melange/compare/v1.4.0...v1.5.0) (2026-11-03)
 
 
